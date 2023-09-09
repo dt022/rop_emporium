@@ -17,23 +17,18 @@ gdb.attach(p, gdbscript=gdbinit)
 
 p.recvuntil("")
 
-# THE ROP CHAIN
+payload = flat(
+    
+)
 
 rop.raw()
 print(rop.dump())
 
-payload = flat(
-
-    rop.chain()    
-)
-
-# PWN
 # pause()
-# p.sendlineafter()
-# p.recvuntil()
 p.send(payload)
+p.send(rop.chain())
 
-# p.interactive()
+p.interactive()
 
 # with open('out.txt', 'wb') as out:
     # out.write(payload)

