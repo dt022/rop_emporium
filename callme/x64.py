@@ -2,11 +2,11 @@ from pwn import *
 
 # file information here
 
+context.terminal = ['bash']
 context.arch = 'x86_64'
 executable = 'callme'
 gdbinit = '''
-    b *pwnme+88
-    b *callme_one
+    b *callme_one+102
 '''
 
 elf = ELF(executable)
